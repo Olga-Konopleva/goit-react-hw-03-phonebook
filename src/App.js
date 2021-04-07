@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ContactForm from './components/ContactForm/ContactForm';
 import ContactList from './components/ContactList/ContactList';
 import Filter from './components/Filter/Filter';
@@ -6,6 +6,16 @@ import Filter from './components/Filter/Filter';
 const App = () => {
   const [contacts, setContacts] = useState([]);
   const [filter, setFilter] = useState('');
+
+  useEffect(() => {
+    const initialСontacts = localStorage.getItem('contacts');
+    const parseContacts = JSON.parse(initialСontacts);
+    setContacts(parseContacts);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+  });
 
   const handleAddContact = newContact => {
     const coincidence = contacts.some(
